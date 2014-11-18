@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
+
+<button onclick="myFunction()">Click me</button>
+
+<p id="test"></p>
+
+<script>
+function myFunction() {
+var i;
+var text="";
+for(i=0; i< 10;i++)
+{
+text += " manikanta " + "</br>";
+}
+
+    document.getElementById("test").innerHTML = text;
+}
+</script>
+
+</body>
+</html>
+
+
