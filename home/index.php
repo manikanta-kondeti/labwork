@@ -101,7 +101,7 @@
                                     <strong>Visualize Shapefile(.shp)</strong>
                                 </h4>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-<form action="./../Shpfiles/shp.html" method="POST">
+<form action="./../Shpfiles/shp.php" method="POST">
 				<input type="hidden" name="user_check1" value=1></input>
                                 <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
 </form>
