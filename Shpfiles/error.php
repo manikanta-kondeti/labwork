@@ -54,7 +54,7 @@ canvas {
 </div>
 
 <div align="center">
-<a href="./shp.php" >  Shapfile Loader </a>
+<a href="./index.php" >  Shapfile Loader </a>
 </div>
 </body>
 </html>

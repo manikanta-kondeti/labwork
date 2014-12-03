@@ -1,5 +1,12 @@
 <?
 //	include('session_1.php');
+session_start();
+if($_SESSION['check_shp']!=1)
+{
+	header('Location: index.php');
+}
+else
+{
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,9 +18,10 @@
 <!--[if IE]><script src="lib/excanvas.js"></script><![endif]-->
 <script type="text/javascript">
 
-var file = "thematicmapping/ernakulam.shp";
 
+var file = "thematicmapping/ernakulam.shp";
 window.onload = function() {
+file = "thematicmapping/ernakulam.shp";
   var b = new BinaryAjax(file, onBinaryAjaxComplete, onBinaryAjaxFail);
 }
 
@@ -149,11 +157,41 @@ canvas {
   background-color: #fff;
   padding: 10px;
 }
+.round-button {
+    width: 3%;
+    height: 0;
+    padding-bottom: 3%;
+    border-radius: 50%;
+    border: 2px solid #f5f5f5;
+    overflow: hidden;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+        position: fixed;
+right:200px;
+top:10px
+}
+.round-button:hover {
+    background: #262626;
+}
+.round-button img {
+    display: block;
+    width: 76%;
+    padding: 12%;
+    height: auto;
+}
+
+
 </style>
 </head>
 <body>
 <h1 align="center">LSIViewer-Shapefile Loader</h1>
-<p align="center">Loading shapefile</p>
+
+<div class="round-button">
+    <a href="./../home/index.php">
+        <img src="http://codeitdown.com/media/Home_Icon.svg" alt="Home" />
+    </a>
+</div>
+
 
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="1">
 <tr>
@@ -164,7 +202,7 @@ canvas {
 <td><strong>File Upload </strong></td>
 </tr>
 <tr>
-<td>Select file
+<td>
 <input name="ufile" type="file" id="ufile" size="50" /></td>
 </tr>
 <tr>
@@ -176,7 +214,15 @@ canvas {
 </tr>
 </table>
 
+</br>
 
-<canvas align="center" id="map" width="800" height="400"></canvas>
+<div align="center">
+<canvas  id="map" width="800" height="400"></canvas>
+</div>
 </body>
 </html>
+
+
+<?php
+}
+?>
