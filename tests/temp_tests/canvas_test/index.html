@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Canvas Testing </title>
+	</head>
+	<body>
+		<div align="center" style="margin-top:100px;">
+			<canvas ondblclick="zoomEvent(event)" id="canvas"  width="800" height="400"> </canvas>
+			<button onclick="zoomIn()" id="zoomIn" >zoomIn</button>
+			<button onclick="zoomOut()" id="zoomOut" >zoomOut</button>
+			<button onclick="PanLeft()" id="PanLeft" >PanLeft</button>
+			<button onclick="PanRight()" id="PanRight" >PanRight</button>
+			<button onclick="PanTop()" id="PanLeft" >PanTop</button>
+			<button onclick="PanBottom()" id="PanRight" >PanBottom</button>
+		</div>
+	</body>
+
+	<script>
+var canvas=document.getElementById('canvas');
+var context=canvas.getContext('2d'); 
+
+/* Initializers */
+var scaleCount=1;
+var move_x = 0;
+var move_y = 0;
+
+var zoomX=400;
+var zoomY = 200;
+var zoomToPoint=0;
+
+var canX;
+var canY;
+var canX = [], canY = [], bubble = [],
+               mouseIsDown = 0, len = 0;
+
+function draw(){
+	context.clearRect(0,0,800,400);
+	/* Bounding Box */
+	context.beginPath();
+	context.save();
+	context.translate(zoomX,zoomY);
+	context.scale(scaleCount,scaleCount);
+	context.translate(-zoomX,-zoomY);
+	context.translate(move_x,move_y);
+	context.moveTo(200,100);
+	context.lineTo(600,100);
+	context.moveTo(600,100);
+	context.lineTo(600,300);
+	context.moveTo(600,300);
+	context.lineTo(200,300);
+	context.moveTo(200,300);
+	context.lineTo(200,100);
+	/* Box Ended */
+
+	/* Diagonals Testing */
+	/* Diagonals Ended  */
+
+	/*Text Added */
+	context.font ="30pt Calibri";
+	context.fillStyle = 'blue';
+	context.fillText("LSIViewer", 300,210);
+	context.stroke();
+	context.restore();
+	context.closePath();
+	/* Text Ended */ 
+}
+
+// Add Event Listeners
+canvas.addEventListener("mousedown", mouseDown, false);
+canvas.addEventListener("mousemove", mouseXY, false);
+canvas.addEventListener("touchstart", touchDown, false);
+canvas.addEventListener("touchstart", touchDown, false);
+canvas.addEventListener("touchmove", touchXY, true);
+canvas.addEventListener("touchend", touchUp, false);
+
+document.body.addEventListener("mouseup", mouseUp, false);
+document.body.addEventListener("touchcancel", touchUp, false);
+
+//Initial Draw
+zoomX = 0;
+zoomY =0;
+draw();
+
+// Implement drag and mouse controls
+
+function mouseUp() {
+	mouseIsDown = 0;
+	mouseXY();
+}
+
+function touchUp() {
+	mouseIsDown = 0;
+	// no touch to track, so just show state
+	showPos();
+}
+
+function mouseDown() {
+	mouseIsDown = 1;
+	mouseXY();
+}
+
+function touchDown() {
+	mouseIsDown = 1;
+	touchXY();
+}
+
+function mouseXY(e) {
+	if (!e)
+		var e = event;
+	canX = e.pageX - canvas.offsetLeft;
+	canY = e.pageY - canvas.offsetTop;
+	showPos();
+}
+
+function touchXY(e) {
+	if (!e)
+		var e = event;
+	e.preventDefault();
+	canX = e.targetTouches[0].pageX - canvas.offsetLeft;
+	canY = e.targetTouches[0].pageY - canvas.offsetTop;
+	showPos();
+}
+
+var prevX;
+var prevY;
+
+function showPos() {
+	console.log("canvas offset left "+ canvas.offsetLeft  );
+	if(mouseIsDown){
+//		draw();
+	}
+}
+
+// Based on the mouse event 
+function zoomEvent(event){
+	x = event.clientX-canvas.offsetLeft;
+	y = event.clientY-canvas.offsetTop;
+	zoomX = x;
+	zoomY = y;
+	console.log("x = "+x+ "y = "+ y);
+	scaleCount*=1.25;
+	zoomToPoint+=1;
+	draw();
+}
+function zoomIn(){
+	scaleCount*=1.25;
+	zoomX = 400;
+	zoomY = 200;
+	draw();
+}
+
+function zoomOut(){
+	scaleCount/=1.25;
+	if(zoomToPoint != 0){
+		draw();
+	}
+	else if(zoomToPoint ==0){
+		zoomToPoint -= 1;
+		zoomX = 400;
+		zoomY = 200;
+		draw();
+	}
+}
+
+function PanLeft(){
+	move_x=move_x-10;
+	draw();
+}
+
+function PanRight(){
+	move_x=move_x+10;
+	draw();
+}
+
+function PanTop(){
+	move_y=move_y-10;
+	draw();
+}
+
+function PanBottom(){
+	move_y=move_y+10;
+	draw();
+}
+</script>
+
+</html>

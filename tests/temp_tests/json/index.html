@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GeoJSON testing</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+		<script src="./lsiviewer.js">
+		</script>
+
+
+	</head>
+	<body>
+		<button id="label" value="0" onclick="labelToggle()"> Label </button>
+		<!-- Attribute Table -->
+		<div>
+			<dialog id="window">
+			<h2 align="center">Attribute Table</h2>
+			<button id="exit">Exit</button>
+			<table border="1" id="attributes" value="0">
+			</table>
+			</dialog>
+			<button id="show" onclick="dialog()" value="0">Show Dialog</button>
+		</div>
+		<canvas id="map"  width="1450" height="700"></canvas>
+        </body>
+</html>

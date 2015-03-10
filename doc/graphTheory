@@ -1,0 +1,23 @@
+Graph: 
+	A triple consisting of Vertex Set(V), Edge Set(E) and Relations between them. 
+
+1. Simple Graph:  A graph which doesn't have a loop or multiple edges, we call it as simple graph.
+
+2. Finite Graph: If the vertex set or edge set in a graph is not finite, i.e.. if it is infinite then we call it as infinite graph. 
+
+   (If at all we are discussing about Non-finite graphs, it will be explicitly mentioned)
+
+3. Complete Graph: In a graph if every pair of vertices are connected to each other, we call it asa complete graph. It is denoted by 'Kn' (K subscript n)
+
+4. Sub graph:  If there is a graph H(Hv,He) such that Hv is subset to Gv and which is subset to Ge, then we call it as subgrah of G. 
+
+5. Induced Subgraph: It has the same definition that of subgraph, but both vertex and edge set are same in G. 
+
+6. Isomorphic: If there is a graph G having a vertex set Vg, and there is another graph H with vertex set Hv, if we map (u,v)belongs to G, similarly there is a function which maps to (f(u), f(v)) to              another graph, they are said to be isomorphic. 
+
+7. Forest and Tree: 
+		Forest: A graph without any cycle is acyclic.
+		A forest is an acyclic graph.
+		A tree is a connected acyclic graph.
+
+8. Vertex Cover: and MVC (Minimum vertex cover)

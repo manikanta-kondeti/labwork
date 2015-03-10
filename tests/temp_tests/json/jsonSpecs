@@ -1,0 +1,8 @@
+{
+	type: "FeatureCollection",
+	features : {
+			type: "feature",
+			geometry: "coordinates{type: "Point, LineString, Polygon, Multi*"}",
+			properties: "attributes"
+		}
+}
