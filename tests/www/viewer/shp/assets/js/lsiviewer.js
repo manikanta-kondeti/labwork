@@ -201,7 +201,7 @@ function draw(features,action){
 	imageObj.onload = function() {
 		context.drawImage(imageObj,canvasWidth-200,canvasHeight-100,w,h);
 	};
-	imageObj.src = 'img/north.png';
+	imageObj.src = 'assets/img/north.png';
 	for(var i=0; i<features.length; i++){
 		var coords = features[i].geometry.coordinates;
 		var geomtype =  features[i].geometry.type;

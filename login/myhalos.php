@@ -21,7 +21,7 @@ session_start();
 <?php
 if($_SESSION['SESS_MEMBER_ID']!=NULL)
 {
-	$con=mysqli_connect("localhost","root","mysql","login");
+	$con=mysqli_connect("localhost","root","321_lab","login");
 	// Check connection
 	if (mysqli_connect_errno())
 	{
