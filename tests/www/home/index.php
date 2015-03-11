@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +16,6 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <link href="css/stylish-portfolio.css" rel="stylesheet">
 
@@ -29,12 +30,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
 </head>
 
 <body>
 
     <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+	<?php if($_SESSION['SESS_MEMBER_ID']!=""){?>
+   <a href="./../utils/logout.php"> <button style="margin-right:80px;margin-top:10px;position:fixed;z-index:1;right:0" href="#" class="btn btn-danger" >LOGOUT</button></a>
+   <?php }?>
+
+	 <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
@@ -47,9 +53,11 @@
             <li>
                 <a href="#about">About</a>
             </li>
+ <?php if($_SESSION['SESS_MEMBER_ID']==""){?>
 				<li>
 					<a href="#login"> Login </a>
 				</li>
+<?php }?>
             <li>
                 <a href="#services">Services</a>
             </li>
@@ -82,78 +90,87 @@
         </div>
         <!-- /.container -->
     </section>
+ <?php if($_SESSION['SESS_MEMBER_ID']==""){?>	
+	<section id="login" style="background:#f7f7f9;padding:60px;">
 
+		<div  class="container">
+	
+		<div class="row">
+			
+			<div class="col-md-1">
 
+				<button id="btn-login" class="btn btn-lg btn-default">Login</button>
 
-    <section id="login" >
-<div class="" id="loginModal">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3>Have an Account?</h3>
-	</div>
-	<div class="modal-body">
-		<div class="well">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="#login" data-toggle="tab">Login</a></li>
-				<li><a href="#create" data-toggle="tab">Create Account</a></li>
-			</ul>
-			<div id="myTabContent" class="tab-content">
-				<div class="tab-pane active in" id="login">
-					<form class="form-horizontal" action='' method="POST">
-						<fieldset>
-							<div id="legend">
-								<legend class="">Login</legend>
-							</div>    
-							<div class="control-group">
-								<!-- Username -->
-								<label class="control-label"  for="username">Username</label>
-								<div class="controls">
-									<input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-							
-							<div class="control-group">
-								<!-- Password-->
-								<label class="control-label" for="password">Password</label>
-								<div class="controls">
-									<input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-							
-							
-							<div class="control-group">
-								<!-- Button -->
-								<div class="controls">
-									<button class="btn btn-success">Login</button>
-								</div>
-							</div>
-						</fieldset>
-					</form>                
-				</div>
-				<div class="tab-pane fade" id="create">
-					<form id="tab">
-						<label>Username</label>
-						<input type="text" value="" class="input-xlarge">
-						<label>First Name</label>
-						<input type="text" value="" class="input-xlarge">
-						<label>Last Name</label>
-						<input type="text" value="" class="input-xlarge">
-						<label>Email</label>
-						<input type="text" value="" class="input-xlarge">
-						<label>Address</label>
-						<textarea value="Smith" rows="3" class="input-xlarge">
-						</textarea>
-						
-						<div>
-							<button class="btn btn-primary">Create Account</button>
-						</div>
-					</form>
-				</div>
 			</div>
-		</div>
-	</div>
-    </section>
+			<div class="col-md-1">
+				
+				<button id="btn-register" class="btn btn-lg btn-default">Register</button>
 
+			</div>
+
+		</div>
+
+		</br></br>
+
+		<div class="row" id="login-container">
+
+			<div class="col-md-4">
+<form id="loginForm" name="loginForm" method="post" action="/lsiviewer_prototype/tests/www/utils/login-exec.php">
+					<div class="form-group">
+						<label for="exampleName">Username</label>
+						<input type="name" name="login" class="form-control" placeholder="Enter username">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					</div>
+				<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+
+				</div>
+	
+		</div>
+
+
+	 <div class="row" id="register-container">
+
+         <div class="col-md-4">
+<form id="registerForm" name="registerForm" method="post" action="/lsiviewer_prototype/tests/www/utils/register-exec.php">
+					<div class="form-group">
+						<label for="exampleInputEmail1">First Name</label>
+						<input type="name" name="fname"class="form-control"  placeholder="Enter Firstname">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Last Name</label>
+						<input type="name" name="lname" class="form-control" placeholder="Enter Username">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Username</label>
+						<input type="name" name="login" class="form-control" placeholder="Enter Username">
+					</div>
+               <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+               </div>
+               <div class="form-group">
+                  <label for="exampleInputPassword1">Retype Password</label>
+                  <input type="password" name="cpassword" class="form-control" id="exampleInputPassword1" placeholder="Retype Password">
+               </div>
+            <button type="submit"  class="btn btn-success">Submit</button>
+            </form>
+
+            </div>
+   
+      </div>
+
+   </div>
+
+
+	</div>
+
+	</section>
+
+	<?php }?>
 
     <!-- Services -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
@@ -174,7 +191,7 @@
                                     <strong>Visualize Shapefile(.shp)</strong>
                                 </h4>
                                 <p>Do you want to visualize the shapefile and analyze it?</p>
-<form action="./../viewer/shp/1.html" method="POST">
+<form action="./../viewer/shp/index.php" method="POST">
 				<input type="hidden" name="user_check1" value=1></input>
                                 <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
 </form>
@@ -312,10 +329,36 @@
             }
         });
     });
+
+$(document).ready(function(){
+
+	$('#register-container').hide();
+	$('#btn-login').addClass('btn-primary');
+
+	$("#btn-login").click(function(){
+
+			$('#btn-login').addClass('btn-primary');
+			$('#btn-register').removeClass('btn-primary');
+			$('#login-container').show();
+			$('#register-container').hide();
+
+	});
+	
+	$("#btn-register").click(function(){
+
+			$('#btn-register').addClass('btn-primary');
+			$('#btn-login').removeClass('btn-primary');
+			$('#login-container').hide();
+			$('#register-container').show();
+
+	});
+
+
+});
+
+
     </script>
 
-<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 
 </body>
 

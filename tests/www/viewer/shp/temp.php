@@ -1,11 +1,5 @@
 <?
-session_start();
-if($_SESSION['check_shp']!=1)
-{
-	header('Location: index.php');
-}
-else
-{
+require_once('./global.php');
 ?>
 		<!DOCTYPE html>
 		<html>
@@ -180,6 +174,3 @@ else
 
 	</script>
 
-<?php
-}
-?>
