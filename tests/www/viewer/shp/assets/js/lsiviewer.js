@@ -6,7 +6,7 @@
 var canvas, context, canvasWidth=1450, canvasHeight=600, drawScale, xMin, xMax, yMin, yMax, flagShift=0;
 
 /* Related to styling */
-var _zoomX=canvasWidth/2, _zoomY=canvasHeight/2, _moveX=0, _moveY=0, _labelWidth=4, _labelColor="#1CFF6F" , _penWidth=1, _fillColor="#FFA500", _strokeColor="000000", scaleCount=1;
+var _zoomX=canvasWidth/2, _zoomY=canvasHeight/2, _moveX=0, _moveY=0, _labelWidth=4, _labelColor="#1c1313" , _penWidth=1, _fillColor="#c9baba", _strokeColor="000000", scaleCount=1;
 var _mouseMove=0;
 
 
@@ -17,7 +17,7 @@ var geojson, labels=[], labelFlag=0, attrPopup=0, flagZoom=0, labelValue;
 // Main Code 
 $(document).ready(function(){
 	console.log('Document Loaded ');
-	$.post('./andhra.json','',function(response){
+	$.post(php_var+'.json','',function(response){
 		load(response);
 _moveX=0;
 _moveY=0;
@@ -30,11 +30,11 @@ function load(response){
 	//console.log(geojson);
 	canvas = document.getElementById("map");
 	context = canvas.getContext('2D');
-canvas.addEventListener('mousedown',MouseDown, 'false');
-canvas.addEventListener('mouseup',MouseUp, 'false');
-canvas.addEventListener('mousemove',MouseMove, 'false');
-canvas.addEventListener('DOMMouseScroll',handleScroll,false);
-canvas.addEventListener('mousewheel',handleScroll,false);
+	canvas.addEventListener('mousedown',MouseDown, 'false');
+	canvas.addEventListener('mouseup',MouseUp, 'false');
+	canvas.addEventListener('mousemove',MouseMove, 'false');
+	canvas.addEventListener('DOMMouseScroll',handleScroll,false);
+	canvas.addEventListener('mousewheel',handleScroll,false);
 	initJson(geojson);
 
 	draw(geojson.features,'draw');
@@ -57,7 +57,7 @@ function initJson(geojson){
 		console.log("flagShift = "+flagShift);
 	}
 	//check for shifting the figure 
-	console.log("xMin = "+xMin + " xMax = "+xMax +" yMin = "+yMin+" yMax = "+yMax+ " xScale = "+xScale+ " yScale = "+yScale + " drawScale = "+drawScale );
+	console.log(" for Points xMin = "+xMin + " xMax = "+xMax +" yMin = "+yMin+" yMax = "+yMax+ " xScale = "+xScale+ " yScale = "+yScale + " drawScale = "+drawScale );
 }
 
 
@@ -150,7 +150,7 @@ var getCenter = function(coords,geomtype){
 	else if(geomtype=="MultiPolygon"){
 	}
 	return [centerX,centerY];
-}
+} 
 
 
 
@@ -207,9 +207,9 @@ function draw(features,action){
 		var geomtype =  features[i].geometry.type;
 		var props =  features[i].properties;
 
-
+			console.log("geomtype Bitch ");
 		if(geomtype=="Polygon"){
-			traverseCoordinates(coords[0],action);
+			traverseCoordinates(coords[0],action,geomtype);
 			if(labelFlag==1){
 				cx = props["centerX"];
 				cy = props["centerY"];
@@ -224,6 +224,9 @@ function draw(features,action){
 			}
 		}
 		else if(geomtype=="Point"){
+			traverseCoordinates(coords[0],action,geomtype);
+			console.log("Point ");
+		console.log("Inpoint "+coords[0]);
 			var x = coords[0];
 			var y = coords[1];
 			x = (x-xMin)*drawScale;
@@ -234,23 +237,47 @@ function draw(features,action){
 			context.stroke();
 		}
 		else if(geomtype=="LineString"){
-			traverseCoordinates(coords,action);
+			traverseCoordinates(coords,action,geomtype);
 		}
 		else if(geomtype=="MultiLineString"){
 
-			traverseCoordinates(coords[0],action);
+			traverseCoordinates(coords[0],action,geomtype);
 		}
 		else if(geomtype=="MultiPolygon"){
 
 			for(var k=0; k<coords.length; k++){
-				traverseCoordinates(coords[k][0],action);
+				traverseCoordinates(coords[k][0],action,geomtype);
 			}
 		}
 	}
 	context.restore();
 }
 
-function traverseCoordinates(coordinates,action){
+function traverseCoordinates(coordinates,action,geomtype){
+	if(geomtype=="Point"){
+		var x = coordinates[0];
+		var y = coordinates[1];
+		if(action == 'bbox'){
+			xMin = xMin<x?xMin:x;
+			xMax = xMax>x?xMax:x;
+			yMin = yMin<y?yMin:y;
+			yMax = yMax>y?yMax:y;
+		}
+		else if(action == 'draw'){
+			x = (x-xMin)*drawScale;
+			y = (yMax-y)*drawScale;
+
+			if(j==0){
+				context.beginPath();
+				context.moveTo(x,y);
+			}
+			else{
+
+				context.lineTo(x,y);
+			}
+	}
+}
+else{
 	for(var j=0; j<coordinates.length; j++){
 		var x = coordinates[j][0];
 		var y = coordinates[j][1];
@@ -274,13 +301,15 @@ function traverseCoordinates(coordinates,action){
 			}
 		}
 	}
-
+}
 	if(action == 'draw'){
 		context.strokeStyle = _strokeColor;
 		context.stroke();
+if(geomtype!="LineString"){
 		context.fillStyle = _fillColor;
 		context.fill();
 	}
+}
 }
 
 
@@ -440,27 +469,22 @@ function labelToggle(){
 function dialog(){
 	var dialog = document.getElementById('window');
 		console.log("Dialog show clicked");
+		
+			string = "";
 
 			for(var i=0;i<labels.length;i++){
-				$('.diag-head-tr').html('<th>'+labels[i]+'</th>');
-
+				string = string+'<th>'+labels[i]+'</th>';
 			}
-
-
-
+			$('.diag-head-tr').html(string);
 				var content;
 			for(var i=0;i<geojson.features.length;i++){
-			
 				content = content + '<tr>';
-
 				for(var j=0;j<labels.length;j++){
 					values = geojson.features[i].properties[labels[j]];
 					content = content + '<td>'+values+'</td>';
 				}
-
 				content = content+"</tr>";
 			}
-
 			$('.diag-body').html(content);
 			
 }
@@ -531,4 +555,53 @@ var handleScroll = function(evt){
 	if (delta) zoom(delta);
 	return evt.preventDefault() && false;
 };
+
+$(document).ready(function(){
+
+   console.log($('.labels li a'));
+console.log("php var "+php_var);
+   $("#stroke_color").spectrum({
+          color: "#f00",
+      showButtons: false,
+       move:function kanta(color){
+         
+            x =  $('#stroke_color').spectrum('get').toHexString();
+             _strokeColor = x;
+            draw(geojson.features, 'draw');
+       }
+    });
+   
+   
+
+
+   $("#fill_color").spectrum({
+      color: "#f00",
+      showButtons: false,
+      move:function(color){
+
+         x=  $('#fill_color').spectrum('get').toHexString();
+         _fillColor = x;
+         draw(geojson.features, 'draw');
+      }
+   });
+   
+   $("#label_color").spectrum({
+          color: "#f00",
+      showButtons: false,
+       move:function(color){
+         
+            x=  $('#label_color').spectrum('get').toHexString();
+             _labelColor = x;
+            console.log(x);
+            draw(geojson.features, 'draw');
+       }
+
+
+
+    });
+
+
+
+});
+
 

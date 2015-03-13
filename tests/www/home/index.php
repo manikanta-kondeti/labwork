@@ -208,7 +208,7 @@ session_start();
                                     <strong>WMS+Shapefile</strong>
                                 </h4>
                                 <p>You can view your shapefile on top of WMS layer</p>
-<form action="./../Mult_shp/index.php" method="POST">
+<form action="#" method="POST">
 				<input type="hidden" name="user_check1" value=1></input>
                                 <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
 </form>
@@ -226,7 +226,7 @@ session_start();
                                     <strong>Compressed GML Files</strong>
                                 </h4>
                                 <p>Do you want to visualize your compressed gml?</p>
-<form action="./../gml/index.php" method="POST">
+<form action="#" method="POST">
 				<input type="hidden" name="user_check1" value=1></input>
                                 <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
 </form>
@@ -243,7 +243,7 @@ session_start();
                                     <strong>Other Vector Files</strong>
                                 </h4>
                                 <p>Vector formats like kml, TIGER, GeoJSON</p>
-<form action="./../VectorFormats/index.php" method="POST">
+<form action="#" method="POST">
 				<input type="hidden" name="user_check1" value=1></input>
                                 <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
 </form>

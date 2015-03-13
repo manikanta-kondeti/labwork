@@ -32,60 +32,11 @@ opacity:0;
  </style>
 
 
- <script>
+ <script> 
 
-   
-
-
-$(document).ready(function(){
-
-	console.log($('.labels li a'));
-
-			
-	$("#stroke_color").spectrum({
-  	    	 color: "#f00",
-		showButtons: false,
-		 move:function kanta(color){
-			
-				x =  $('#stroke_color').spectrum('get').toHexString();
-				 _strokeColor = x;
-				draw(geojson.features, 'draw');
-		 }
-	 });
-	
-	
-
-
-	$("#fill_color").spectrum({
-		color: "#f00",
-		showButtons: false,
-		move:function(color){
-
-			x=  $('#fill_color').spectrum('get').toHexString();
-			_fillColor = x;
-			draw(geojson.features, 'draw');
-		}
-	});
-	
-	$("#label_color").spectrum({
-  	    	 color: "#f00",
-		showButtons: false,
-		 move:function(color){
-			
-				x=  $('#label_color').spectrum('get').toHexString();
-		 		 _labelColor = x;
-				console.log(x);
-				draw(geojson.features, 'draw');
-		 }
-
-
-
-	 });
-
-
-
-});
- </script>
+ var php_var = "uploads/<?php echo $_SESSION['SESS_MEMBER_ID']?>/<?php echo $_SESSION['SESS_MEMBER_ID']?>";
+  
+</script>
 
 </head>
 
@@ -113,12 +64,19 @@ $(document).ready(function(){
 
                     </li>
 		</ul>
+   <form action="./upload.php" method="post" enctype="multipart/form-data">
 		<ul class="nav navbar-nav pull-right">
                     <li>
-                        <input style="margin-top:20px;"type="file"></input>
+  											<input style="margin-top:20px;" name="files[]" multiple="multiple" type="file" /><br />
                     </li>
                     <li>
                         <a><button class="btn btn-primary">UPLOAD</button></a>
+</form>
+                    </li>
+                    <li>
+   <form action="./../../utils/logout.php" method="post">
+                        <a><button style="margin-top:16px; margin-left:100px;" class="btn btn-danger">LOGOUT</button></a>
+</form>
                     </li>
                 </ul>
             </div>
@@ -173,8 +131,17 @@ $(document).ready(function(){
 
 		</div></br>
         <!-- /.row -->
-     <canvas  id="map" ondblclick="_zoomEvent(event)" width="1450" height="600"></canvas>
-
+			<?php 
+				$file_name = "uploads/".$_SESSION['SESS_MEMBER_ID']."/".$_SESSION['SESS_MEMBER_ID'].".json";
+				if(file_exists($file_name)){?>
+     			<canvas  id="map" ondblclick="_zoomEvent(event)" width="1450" height="580"></canvas>
+			<?php }else{ ?>
+				</br></br>
+				<div class="col-md-offset-3 col-md-6">	
+					<img src="assets/img/file_upload.jpg">				
+				</div>
+	
+			<?php }?>
     </div>
 
     <div style="margin-left:0px;">
@@ -230,6 +197,16 @@ $(document).ready(function(){
   </div>
 </div>
 
+<footer>
+<div class="container">
+	<div class="row">
+<div class="col-lg-10 col-lg-offset-1 text-center">
+                <hr class="small">
+                <p class="text-muted">Copyright &copy; Lsiviewer 2015</p>
+</div>
+</div>
+</div>
+</footer>
 <script type="text/javascript" src="./assets/js/lsiviewer.js"></script>
 
 </body>

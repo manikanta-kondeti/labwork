@@ -1,7 +1,4 @@
 <?php
-session_start();
-$_SESSION['user_check1']=1;
-$_SESSION['user_check2']=2;
 
 header('Location: ./home/index.php');
 ?>

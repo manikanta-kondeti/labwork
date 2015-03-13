@@ -6,6 +6,7 @@
 	unset($_SESSION['SESS_MEMBER_ID']);
 	unset($_SESSION['SESS_FIRST_NAME']);
 	unset($_SESSION['SESS_LAST_NAME']);
+//	exec("rm -rf  ./../viewer/shp/uploads/".$_SESSION['SESS_MEMBER_ID']." 2>&1");
 	header('Location: ./../home/index.php');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
