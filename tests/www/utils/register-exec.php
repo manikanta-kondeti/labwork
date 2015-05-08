@@ -48,7 +48,7 @@
 		$errflag = true;
 	}
 	if($login == '') {
-		$errmsg_arr[] = 'Login ID missing';
+		$errmsg_arr[] = 'Email ID missing';
 		$errflag = true;
 	}
 	if($password == '') {
@@ -71,9 +71,9 @@
 		$result = mysql_query($qry);
 		if($result) {
 			if(mysql_num_rows($result) > 0) {
-				$errmsg_arr[] = 'Login ID already in use';
+				$errmsg_arr[] = 'Email ID already in use';
 				$errflag = true;
-				die("Login ID already in use.... Try with different ID ");
+				die("Email ID already in use.... Try with different ID ");
 			}
 			@mysql_free_result($result);
 		}

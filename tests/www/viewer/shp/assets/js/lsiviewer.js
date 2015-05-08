@@ -30,7 +30,7 @@ $(document).ready(function(){
   Create canvas and event listeners. 
   Calls InitJson -- Method 
   draw -- Method ( Display the map) 
-  labelsFill and traverseLabels --- 
+  labelsFill and traverseLabels (Filling labels in arrays and giving control to the UI)--- 
  */
 
 
@@ -103,16 +103,17 @@ function labelsFill(){
 /* getCenter = Appends center coords for each feature */
 var getCenter = function(coords,geomtype){
 		  var centerX=0, centerY=0;
-
+ 	    // console.log("geomtype = "+ geomtype+ "coords = "+ coords.length);
 		  if(geomtype=="Point"){
+					 console.log("In getCenters method, With point data x = "+ coords[0]+ " y = "+ coords[1]);
 					 centerX = coords[0];
-					 centerY = coords[0];
+					 centerY = coords[1];
 		  }
 
 		  else if(geomtype=="LineString"){
 					 console.log("LineString Coords"+ coords[0].length);
-					 for(var i=0;i<coords[0].length;i++){
-								var obj=coords[0][i];
+					 for(var i=0;i<coords.length;i++){
+								var obj=coords[i];
 								centerX += parseFloat(obj[0]);
 								centerY += parseFloat(obj[1]);
 					 }
@@ -164,7 +165,7 @@ var getCenter = function(coords,geomtype){
 
 
 
-/* TraverseLabels = Appending centers to each feature(point, linestring, polygon, multi*  */
+/* TraverseLabels = Appending centers to each feature(point, linestring, polygon, multi)  */
 
 function traverseLabels(features){
 		  for(var i=0;i<features.length;i++){
@@ -216,7 +217,7 @@ function draw(features,action){
 					 var geomtype =  features[i].geometry.type;
 					 var props =  features[i].properties;
 
-					 //	console.log("geomtype Bitch"+ geomtype+ "  with data = "+ coords);
+					// console.log("geomtype Bitch"+ geomtype+ "  with data = "+ coords);
 					 if(geomtype=="Polygon"){
 								traverseCoordinates(coords[0],action,geomtype);
 								if(labelFlag==1){
@@ -240,15 +241,12 @@ function draw(features,action){
 										  cy = props["centerY"];
 										  cx = (cx-xMin)*drawScale;
 										  cy = (yMax-cy)*drawScale;
-
-										  console.log("xMIN = "+xMin + " yMax = "+yMax);
-										  console.log("cx = "+ cx+ " cy = "+cy);
 										  context.save();
 										  context.font =_labelWidth + "pt Calibri";
 										  console.log("_labelWidth = "+_labelWidth);
 										  context.fillStyle = _labelColor;
 										  console.log("Label value =" + labelValue);
-										  context.fillText("Mani", cx,cy);
+										  context.fillText(props[labelValue], cx,cy);
 										  context.restore();
 								}
 								traverseCoordinates(coords,action,geomtype);
@@ -256,12 +254,10 @@ function draw(features,action){
 					 else if(geomtype=="LineString"){
 								traverseCoordinates(coords,action,geomtype);
 								if(labelFlag==1){
-										  console.log("Label toggle");
 										  cx = props["centerX"];
 										  cy = props["centerY"];
 										  cx = (cx-xMin)*drawScale;
 										  cy = (yMax-cy)*drawScale;
-
 										  context.save();
 										  context.font =_labelWidth+ "pt Calibri";
 										  context.fillStyle = _labelColor;
@@ -395,7 +391,7 @@ function _panUp(){
 }
 function _panDown(){
 		  _moveY=_moveY+10;
-		  console.log("Up clicked " + _moveY);
+		  console.log("Down clicked " + _moveY);
 		  draw(geojson.features, 'draw');
 }
 function _panLeft(){
@@ -497,9 +493,7 @@ function labelToggle(){
 function dialog(){
 		  var dialog = document.getElementById('window');
 		  console.log("Dialog show clicked");
-
 		  string = "";
-
 		  for(var i=0;i<labels.length;i++){
 					 string = string+'<th>'+labels[i]+'</th>';
 		  }
@@ -534,7 +528,7 @@ function dialog1(){
 // Adding event handlers 
 
 var lastX=canvasWidth/2, lastY=canvasHeight/2;
-var dragStart=[],dragged;
+var dragStart=[],dragged=false;
 var MouseDown = function(evt){
 		  console.log("In mouse down");
 		  document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
@@ -591,47 +585,35 @@ $(document).ready(function(){
 					 console.log($('.labels li a'));
 					 console.log("php var "+php_var);
 					 $("#stroke_color").spectrum({
-color: "#f00",
-showButtons: false,
-move:function kanta(color){
-
-x =  $('#stroke_color').spectrum('get').toHexString();
-_strokeColor = x;
-draw(geojson.features, 'draw');
-}
-});
-
-
-
+								color: "#f00",
+								showButtons: false,
+								move:function kanta(color){
+								x =  $('#stroke_color').spectrum('get').toHexString();
+								_strokeColor = x;
+								draw(geojson.features, 'draw');
+					}
+			});
 
 					 $("#fill_color").spectrum({
-color: "#f00",
-showButtons: false,
-move:function(color){
-
-x=  $('#fill_color').spectrum('get').toHexString();
-_fillColor = x;
-draw(geojson.features, 'draw');
-}
+						color: "#f00",
+						showButtons: false,
+						move:function(color){
+						x =  $('#fill_color').spectrum('get').toHexString();
+						_fillColor = x;
+						draw(geojson.features, 'draw');
+			}
 });
 
 $("#label_color").spectrum({
-color: "#f00",
-showButtons: false,
-move:function(color){
-
-x=  $('#label_color').spectrum('get').toHexString();
-_labelColor = x;
-console.log(x);
-draw(geojson.features, 'draw');
-}
-
-
-
-});
-
-
-
+		color: "#f00",
+		showButtons: false,
+		move:function(color){
+					x=  $('#label_color').spectrum('get').toHexString();
+					_labelColor = x;
+					console.log(x);
+					draw(geojson.features, 'draw');
+		}
+	});
 });
 
 

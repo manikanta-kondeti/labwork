@@ -117,8 +117,8 @@ session_start();
 			<div class="col-md-4">
 <form id="loginForm" name="loginForm" method="post" action="/lsiviewer_prototype/tests/www/utils/login-exec.php">
 					<div class="form-group">
-						<label for="exampleName">Username</label>
-						<input type="name" name="login" class="form-control" placeholder="Enter username">
+						<label for="exampleName">Email</label>
+						<input type="email" name="email" class="form-control" placeholder="Enter Email">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
@@ -142,11 +142,11 @@ session_start();
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Last Name</label>
-						<input type="name" name="lname" class="form-control" placeholder="Enter Username">
+						<input type="name" name="lname" class="form-control" placeholder="Enter Lastname">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Username</label>
-						<input type="name" name="login" class="form-control" placeholder="Enter Username">
+						<label for="exampleInputEmail1">Email id</label>
+						<input type="email" name="login" class="form-control" placeholder="Enter Email">
 					</div>
                <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
@@ -208,10 +208,6 @@ session_start();
                                     <strong>WMS+Shapefile</strong>
                                 </h4>
                                 <p>You can view your shapefile on top of WMS layer</p>
-<form action="#" method="POST">
-				<input type="hidden" name="user_check1" value=1></input>
-                                <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
-</form>
                             </div>
                         </div>
 
@@ -226,10 +222,6 @@ session_start();
                                     <strong>Compressed GML Files</strong>
                                 </h4>
                                 <p>Do you want to visualize your compressed gml?</p>
-<form action="#" method="POST">
-				<input type="hidden" name="user_check1" value=1></input>
-                                <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
-</form>
                             </div>
                         </div>
 
@@ -243,10 +235,6 @@ session_start();
                                     <strong>Other Vector Files</strong>
                                 </h4>
                                 <p>Vector formats like kml, TIGER, GeoJSON</p>
-<form action="#" method="POST">
-				<input type="hidden" name="user_check1" value=1></input>
-                                <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
-</form>
                             </div>
                         </div>
 
