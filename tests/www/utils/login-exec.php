@@ -1,4 +1,5 @@
 <?php
+	echo "Test email login exec";
 	//Start session
 	session_start();
 	
@@ -43,7 +44,8 @@
 		$errmsg_arr[] = 'Password missing';
 		$errflag = true;
 	}
-	
+	echo $login;	
+	echo $password;
 	//If there are input validations, redirect back to the login form
 	if($errflag) {
 		$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
@@ -55,7 +57,6 @@
 	$qry="SELECT * FROM members WHERE login='$login' AND passwd='".md5($_POST['password'])."'";
 	$result=mysql_query($qry);
 	
-echo "Fine";
 	//Check whether the query was successful or not
 	if($result) {
 		if(mysql_num_rows($result) == 1) {
@@ -66,9 +67,12 @@ echo "Fine";
 			$_SESSION['SESS_MEMBER_ID'] = $member['member_id'];
 			echo $member['member_id'];
 			$_SESSION['SESS_LOGIN_ID'] = $member['login'];
+			$_SESSION['SESS_NAME'] = $member['firstname'];
 		//	session_write_close();
+			echo "sess_login_id ", $_SESSION['SESS_LOGIN_ID'];
+			echo "sess_member_id ", $_SESSION['SESS_MEMBER_ID'];
 			
-		header("Location: ./../home/index.php");
+//		header("Location: ./../home/index.php");
 
 		    
 		}else {

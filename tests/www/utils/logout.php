@@ -4,8 +4,7 @@
 	
 	//Unset the variables stored in session
 	unset($_SESSION['SESS_MEMBER_ID']);
-	unset($_SESSION['SESS_FIRST_NAME']);
-	unset($_SESSION['SESS_LAST_NAME']);
+	unset($_SESSION['SESS_NAME']);
 //	exec("rm -rf  ./../viewer/shp/uploads/".$_SESSION['SESS_MEMBER_ID']." 2>&1");
 	header('Location: ./../home/index.php');
 ?>
