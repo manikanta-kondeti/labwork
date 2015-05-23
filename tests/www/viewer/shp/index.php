@@ -60,8 +60,6 @@ opacity:0;
                 <ul class="nav navbar-nav">
 
   		    <li><button href="#myModal" id="openBtn" data-toggle="modal" style="margin-top:13px;" class="btn btn-success" onclick="dialog();">Attribute Table</button></li>
-
-
                     </li>
 		</ul>
    <form action="./upload.php" method="post" enctype="multipart/form-data">
@@ -210,8 +208,4 @@ opacity:0;
 <script type="text/javascript" src="./assets/js/lsiviewer.js"></script>
 
 </body>
-
-
-
-
 </html>

@@ -69,10 +69,8 @@
 			$_SESSION['SESS_LOGIN_ID'] = $member['login'];
 			$_SESSION['SESS_NAME'] = $member['firstname'];
 		//	session_write_close();
-			echo "sess_login_id ", $_SESSION['SESS_LOGIN_ID'];
-			echo "sess_member_id ", $_SESSION['SESS_MEMBER_ID'];
 			
-//		header("Location: ./../home/index.php");
+		header("Location: ./../home/index.php");
 
 		    
 		}else {

@@ -70,14 +70,17 @@ session_start();
 
     <!-- Header -->
     <header id="top" class="header">
-	<?php if($_SESSION['SESS_MEMBER_ID']!=''){ ?>
-	<div>
-	<h5>Welcome <b><?php echo $_SESSION['SESS_NAME']?></b></h5>
-   </div>    
-	<?php } ?> 
 	<div class="text-vertical-center">
             <h1>Lsiviewer</h1>
             <h3>An online viewer for spatial vector data</h3>
+	<?php if($_SESSION['SESS_MEMBER_ID']==''){ ?>
+	<h4>Please Login to use the application</h4>
+	<?php } ?>  	
+	<?php if($_SESSION['SESS_MEMBER_ID']!=''){ ?>
+	<div>
+	<h4>Welcome <b><?php echo $_SESSION['SESS_NAME']?></b></h4>
+   </div>    
+	<?php } ?> 
             <br>
             <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
         </div>
@@ -90,12 +93,7 @@ session_start();
                 <div class="col-lg-12 text-center">
                     <h2>LSIViewer: An online viewer for spatial vector data</h2>
                     <p class="lead">No operating system has built-in mechanism for viewing spatial data. One needs a geo spatial rendering package to visualize the data. Modern browsers are also not able to render vector maps even though the technology gives freedom. Web browsers are becoming a platform for different kinds of application. <a target="_blank" href="http://lsidev.iiit.ac.in/lsiviewer_prototype/tests/www">Lsiviewer</a> is an open source tool which renders vector data on modern browsers, which allows GIS users/developers to see their maps without installing any software on their system.</p>
-                </div>
-	<?php if($_SESSION['SESS_MEMBER_ID']==''){ ?>
-	<div>
-	<p>Please Login to use the application</p>
    </div>    
-	<?php } ?>  	
             </div>
             <!-- /.row -->
         </div>
@@ -202,10 +200,14 @@ session_start();
                                     <strong>Visualize Shapefile(.shp)</strong>
                                 </h4>
                                 <p>Do you want to visualize the shapefile and analyze it?</p>
-<form action="./../viewer/shp/index.php" method="POST">
-				<input type="hidden" name="user_check1" value=1></input>
-                                <input type="submit" href="#" class="btn btn-light" value="Learn More"></input>
-</form>
+
+								<!-- Validate Login --> 
+								<?php if($_SESSION['SESS_MEMBER_ID']!=""){ ?>
+								<form action="http://lsidev.iiit.ac.in/lsiviewer_prototype/tests/www/viewer/shp/index.php" method="POST">
+											<input type="hidden" name="user_check1" value=1></input>
+                                <input type="submit" class="btn btn-light" value="Open the application" />
+								</form>
+								<? } ?>
                             </div>
                         </div>
 
